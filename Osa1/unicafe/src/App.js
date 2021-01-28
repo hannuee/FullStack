@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
+const StatisticLine = ({text, value}) => <p>{text} {value}</p>
+
 const Statistics = ({good, neutral, bad}) => {
   const feedbackAll = () => (good + neutral + bad)
   const feedbackAverage = () => {
@@ -10,7 +12,7 @@ const Statistics = ({good, neutral, bad}) => {
   }
   const feedbackPositivePercent = () => {
     if ((good + neutral + bad) === 0) return 0
-    return ((good)/(good + neutral + bad))*100
+    return ((good)/(good + neutral + bad))*100 + " %"
   }
 
   if ((good + neutral + bad) === 0) return <><h1>Statistics</h1><p>No feedback given</p></>
@@ -18,12 +20,12 @@ const Statistics = ({good, neutral, bad}) => {
   return (
     <>
       <h1>Statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {feedbackAll()}</p>
-      <p>average {feedbackAverage()}</p>
-      <p>positive {feedbackPositivePercent()} %</p>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={feedbackAll()} />
+      <StatisticLine text="average" value={feedbackAverage()} />
+      <StatisticLine text="positive" value={feedbackPositivePercent()} />
     </>
   )
 }
