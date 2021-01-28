@@ -14,6 +14,13 @@ const copyArrayAndAddOneToIndex = (arrayToBeCopied, index) => {
   copy[index] += 1
   return copy
 }
+const indexOfBiggestNumber = (array) => {
+  let biggestIndex = 0
+  for (var i = 0; i < array.length; i++) {
+    if (array[biggestIndex] < array[i]) biggestIndex = i
+  }
+  return biggestIndex
+}
 
 // Components:
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
@@ -37,10 +44,13 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]} <br />
       has {votes[selected]} votes<br />
       <Button text="vote" handleClick={voteClick} />
       <Button text="next anecdote" handleClick={randomClick} />
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[indexOfBiggestNumber(votes)]}
     </div>
   )
 }
