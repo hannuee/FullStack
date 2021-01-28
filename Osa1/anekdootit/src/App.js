@@ -1,5 +1,21 @@
 import React, { useState } from 'react'
 
+// Tools:
+const randomIntFromRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const createArrayOfZeroes = (amount) => {
+  let zeroesArray = new Array(amount)
+  for (var i = 0; i < zeroesArray.length; i++) {
+    zeroesArray[i] = 0
+  }
+  return zeroesArray
+}
+const copyArrayAndAddOneToIndex = (arrayToBeCopied, index) => {
+  const copy = [...arrayToBeCopied]
+  copy[index] += 1
+  return copy
+}
+
+// Components:
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
 const App = () => {
@@ -13,14 +29,17 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const randomClick = () => setSelected(randomIntFromRange(0, anecdotes.length - 1))
 
-  const randomIntFromRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-
-  const randomClick = () => setSelected(randomIntFromRange(0,5))
+  // Voting mechanism:
+  const [votes, setVotes] = useState(createArrayOfZeroes(anecdotes.length))
+  const voteClick = () => setVotes(copyArrayAndAddOneToIndex(votes, selected))
 
   return (
     <div>
       {anecdotes[selected]} <br />
+      has {votes[selected]} votes<br />
+      <Button text="vote" handleClick={voteClick} />
       <Button text="next anecdote" handleClick={randomClick} />
     </div>
   )
