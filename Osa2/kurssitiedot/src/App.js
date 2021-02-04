@@ -20,10 +20,17 @@ const Content = (props) => (
   </>
 )
 
+const Total = (props) => (
+  <>
+    <p><b>total of {props.parts.reduce((acc, cur) => acc + cur.exercises, 0)} exercises</b></p>
+  </>
+)
+
 const Course = ({course}) => (
   <>
     <Header courseName={course.name} />
     <Content parts={course.parts} />
+    <Total parts={course.parts} />
   </>
 )
 
