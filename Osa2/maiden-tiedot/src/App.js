@@ -5,8 +5,15 @@ const FilterForm = ({search, handleSearchChange}) => (
   <div> find countries <input value={search} onChange={handleSearchChange} /></div>
 )
 
-const CountriesList = ({countriesToShow}) => (
-  <>{countriesToShow.map(country => <p key={country.name}>{country.name}</p>)}</>
+const CountriesList = ({countriesToShow, handleShowClick}) => (
+  <>
+    {countriesToShow.map(country => 
+      <div key={country.name}><p>
+        {country.name} &nbsp;
+        <button key={country.name} onClick={() => handleShowClick(country.name)}>show</button>
+        </p>
+      </div>)}
+  </>
 )
 
 const CountryInfo = ({country}) => (
@@ -38,6 +45,10 @@ const App = () => {
     setSearch(event.target.value)
   }
 
+  const handleShowClick = (nameOfCountry) => {
+    setSearch(nameOfCountry)
+  }
+
   const countriesToShow = countries.filter(country => country.name.toLowerCase().search(search.toLowerCase()) !== -1)
   
   if(search === ''){
@@ -58,11 +69,10 @@ const App = () => {
     return (
       <div>
         <FilterForm search={search} handleSearchChange={handleSearchChange} />
-        <CountriesList countriesToShow={countriesToShow} />
+        <CountriesList countriesToShow={countriesToShow} handleShowClick={handleShowClick} />
       </div>
     )
   } else if(countriesToShow.length === 1){
-    console.log('heips')
     return (
       <div>
         <FilterForm search={search} handleSearchChange={handleSearchChange} />
