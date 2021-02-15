@@ -29,7 +29,7 @@ const App = () => {
 
   useEffect(() => { 
     axios
-      .get('http://localhost:3001/persons')
+      .get('/api/persons')
       .then(response => setPersons(response.data))
     }, [])
 
@@ -44,7 +44,7 @@ const App = () => {
       window.alert(`${newName} is already added to phonebook`);
     } else {
       axios
-        .post('http://localhost:3001/persons', personObject)
+        .post('/api/persons', personObject)
         .then(response => {
           setPersons(persons.concat(response.data))
           setNewName('')
@@ -54,7 +54,7 @@ const App = () => {
   }
 
   const deletePerson = (personToDelete) => {
-    const url = `http://localhost:3001/persons/${personToDelete.id}`
+    const url = `/api/persons/${personToDelete.id}`
     if(window.confirm(`Delete ${personToDelete.name} ?`)) {
       axios.delete(url).then(response => {
         setPersons(persons.filter(person => person.id !== personToDelete.id))
