@@ -15,8 +15,10 @@ const NewPersonForm = ({addPerson, newName, handleNameChange, newNumber, handleN
   </form>
 )
 
-const PersonsList = ({personsToShow}) => (
-  <>{personsToShow.map(person => <p key={person.name}>{person.name} {person.number}</p>)}</>
+const PersonsList = ({personsToShow, deletePerson}) => (
+  <>{personsToShow.map(person => 
+    <p key={person.name}>{person.name} {person.number} <button onClick={() => deletePerson(person)}>delete</button></p>
+  )}</>
 )
 
 const App = () => {
@@ -51,6 +53,14 @@ const App = () => {
     }
   }
 
+  const deletePerson = (personToDelete) => {
+    const url = `http://localhost:3001/persons/${personToDelete.id}`
+    if(window.confirm(`Delete ${personToDelete.name} ?`)) {
+      axios.delete(url).then(response => {
+        setPersons(persons.filter(person => person.id !== personToDelete.id))
+    })}
+  }
+
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
   }
@@ -70,7 +80,7 @@ const App = () => {
       <h2>Add a new</h2>
       <NewPersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <PersonsList personsToShow={personsToShow} />
+      <PersonsList personsToShow={personsToShow} deletePerson={deletePerson} />
     </div>
   )
 
